@@ -1,1 +1,13 @@
-venv/
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Neo4j
+neo4j/data/
+neo4j/plugins/
+neo4j/import/
+
+# OS / misc
+.DS_Store
