@@ -4,6 +4,10 @@ __pycache__/
 .rigenv/
 .env
 
+#data
+data/raw/ifc/
+data/processed/rag/index.faiss
+
 # Neo4j
 neo4j/data/
 neo4j/plugins/
