@@ -189,7 +189,7 @@ def main():
             attrs_json = json.dumps(attrs, ensure_ascii=False)
             flow_dir = attrs.get("FlowDirection") or obj.get("FlowDirection")
 
-            # MERGE by globalID only
+            # MERGE by globalId
             s.run(
                 """
                 MERGE (n:IfcEntity {globalId:$id})
