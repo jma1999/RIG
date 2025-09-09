@@ -126,6 +126,36 @@ def main():
                     """, id=gid, psets_json=json.dumps(ps, ensure_ascii=False), flat=flat)
             except Exception:
                 pass
+        
+        # --- SPACES (rooms) ---
+        spaces = ifc.by_type("IfcSpace")
+        for sp in spaces:
+            gid  = getattr(sp, "GlobalId", None)
+            if not gid:
+                continue
+            nm   = name_of(sp)                    # often Room Number in Revit
+            long = getattr(sp, "LongName", None)  # often Room Name in Revit
+            # optional: psets for spaces
+            try:
+                ps = get_psets(sp) or {}
+                flat = flatten_psets(ps)
+                pjson = json.dumps(ps, ensure_ascii=False)
+            except Exception:
+                flat, pjson = {}, None
+
+            s.run("""
+                MERGE (x:IfcEntity:IfcSpace {globalId:$id})
+                ON CREATE SET x.name=$name, x.type='IfcSpace', x.source=$src
+                SET x.longName = $long
+            """, id=gid, name=nm, src=SOURCE, long=long)
+
+            if flat or pjson:
+                s.run("""
+                    MATCH (x:IfcSpace {globalId:$id})
+                    SET x.psets_json = coalesce(x.psets_json, $pjson)
+                    SET x += $flat
+                """, id=gid, pjson=pjson, flat=flat)
+
 
         # --- 2) Relationships (spatial, aggregates, systems, connectivity)
         # Spatial containment
