@@ -61,6 +61,7 @@ def ifc_type(o) -> str:
     except: return "Unknown"
 
 def flatten_psets(ps: Dict[str, Any]) -> Dict[str, Any]:
+    # Flatten property sets (ps) into a single dictionary
     out = {}
     for pset, props in ps.items():
         if isinstance(props, dict):
