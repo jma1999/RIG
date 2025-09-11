@@ -1,0 +1,8 @@
+\textbf{IFC and BIM.} The Industry Foundation Classes (IFC) standard is a widely used open specification for exchanging BIM data across tools and disciplines. IFC encodes a typed object model (e.g., walls, spaces, systems) with properties, relationships, and geometry. While expressive, raw IFC is not optimized for graph traversal or flexible queries.
+
+\textbf{Graphs for BIM.} Graph databases model entities as nodes and relationships as edges, enabling concise queries over connectivity (e.g., spatial adjacency, containment, systems). Prior work has explored mapping IFC concepts to graphs to enable reasoning and analytics across disciplines.
+
+\textbf{Retrieval-Augmented Generation (RAG).} RAG indexes structured or semi-structured evidence to ground natural language answers. In this project, graph-derived artifacts are exported and embedded to support question answering over building knowledge.
+
+We build on these ideas with a minimal, reproducible pipeline that prioritizes: (i) transparent data transformations, (ii) explicit schema, and (iii) utilities for validating identifiers and spatial placements.
+

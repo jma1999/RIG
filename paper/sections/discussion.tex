@@ -1,0 +1,11 @@
+The experiments surfaced several practical considerations:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{GUID hygiene:} Overlapping identifiers across models complicate merges; robust namespacing or crosswalk tables are recommended.
+  \item \textbf{Placements and frames:} Inconsistent local-to-global transforms can mislead spatial inference; probes and visual checks are crucial.
+  \item \textbf{Schema evolution:} As coverage expands (e.g., MEP systems), the graph schema should evolve under version control with migration scripts.
+  \item \textbf{RAG alignment:} Evidence structures benefit from being traceable back to canonical graph nodes via stable keys.
+\end{itemize}
+
+Limitations include limited geometric reasoning (e.g., no robust intersection tests) and reliance on sample models. Future work includes enriched geometry processing, probabilistic spatial inference, and benchmarks for QA over BIM graphs.
+

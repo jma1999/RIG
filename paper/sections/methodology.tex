@@ -1,0 +1,18 @@
+Our methodology comprises three phases: (1) IFC to JSON, (2) JSON to Neo4j with explicit schema, and (3) graph enrichment via spatial linking and evidence construction.
+
+\paragraph{IFC to JSON.} We use utilities under `tools/ifc2json/` to convert IFC to compact JSON suited for downstream ingestion. This includes readers and mesh utilities (e.g., `tools/ifc2json/ifcjson/reader.py`, `tools/ifc2json/ifcjson/mesh.py`) and command-line entry points (e.g., `tools/ifc2json/ifc2json.py`). Example raw inputs are in `data/raw/ifcjson/`.
+
+\paragraph{JSON to Neo4j.} We ingest JSON into Neo4j using `ingest/ifcjson_to_neo4j.py` and `ingest/ifc_to_neo4j.py`, guided by a Cypher schema in `graph/schema.cypher`. The ingest step creates typed nodes (e.g., `:IfcSpace`, `:IfcWall`, `:IfcBuildingStorey`) and relationships reflecting containment and references.
+
+\paragraph{Spatial Linking.} We enrich the graph with spatial edges inferred from placements and elevations. The repository provides multiple strategies:
+\begin{itemize}[leftmargin=*]
+  \item Placement-driven linking via `ingest/link_in_space_by_placement.py` and probes in `ingest/probe_placements.py` and `ingest/print_placements_probe.py`.
+  \item IFC-driven linking across one or two models via `ingest/link_in_space_from_ifc.py` and `ingest/link_in_space_from_two_ifc.py`.
+  \item Database-driven post-processing via `ingest/link_in_space_db_driven.py`.
+  \item Elevation extraction with `ingest/extract_elevations.py` to support vertical relations (e.g., floor adjacency).
+\end{itemize}
+
+\paragraph{Identifier Quality.} We detect overlapping or inconsistent GUIDs with `ingest/check_guid_overlap.py`, important for merging models and preserving referential integrity.
+
+\paragraph{Evidence and RAG.} We build and query a retrieval index over graph-derived artifacts using `rag/build_index.py`, `rag/query.py`, and `rag/answer.py`. Processed evidence lives under `data/processed/` (e.g., `data/processed/evidence.json`, `data/processed/rag/meta.json`).
+

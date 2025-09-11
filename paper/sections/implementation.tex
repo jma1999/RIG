@@ -1,0 +1,23 @@
+This section summarizes key implementation components and how they interoperate.
+
+\paragraph{Schema.} The Cypher schema in `graph/schema.cypher` defines labels, constraints, and relationship patterns. It grounds the ingest process and ensures consistent typing for downstream analytics.
+
+\paragraph{Ingest.} The core scripts include:
+\begin{itemize}[leftmargin=*]
+  \item `ingest/ifcjson_to_neo4j.py` and `ingest/ifc_to_neo4j.py` for node and relationship creation.
+  \item `ingest/ifcjson_edges.py` to construct edges from JSON relations.
+  \item Utilities for sanity checks such as `ingest/check_guid_overlap.py`.
+\end{itemize}
+
+\paragraph{Spatial Utilities.} Placement probing and spatial inference are implemented in:
+\begin{itemize}[leftmargin=*]
+  \item `ingest/probe_placements.py` and `ingest/print_placements_probe.py` for investigating coordinate frames and transformations.
+  \item `ingest/link_in_space_by_placement.py`, `ingest/link_in_space_from_ifc.py`, and `ingest/link_in_space_from_two_ifc.py` for constructing adjacency and containment.
+  \item `ingest/link_in_space_db_driven.py` for post-ingest linking using graph queries.
+  \item `ingest/extract_elevations.py` to derive vertical structure.
+\end{itemize}
+
+\paragraph{RAG Layer.} The retrieval-augmented component indexes graph-derived evidence with `rag/build_index.py`, and enables queries via `rag/query.py` and `rag/answer.py`. These scripts assume pre-exported evidence files under `data/processed/`.
+
+\paragraph{Operational Notes.} A simple connectivity script `scripts/bolt_check.py` is provided for verifying Neo4j connectivity. Docker orchestration is captured in `docker-compose.yml` for local graph servers.
+

@@ -1,0 +1,18 @@
+We evaluated the pipeline on sample models included in this repository:
+
+\begin{itemize}[leftmargin=*]
+  \item `data/raw/ifcjson/SampleHospital_Arch.json`
+  \item `data/raw/ifcjson/SampleHospital_Mech.json`
+  \item `data/raw/ifcjson/Arch_with_Spaces.json`
+\end{itemize}
+
+\paragraph{Graph Construction.} For each model, the ingest scripts produced a property graph with IFC-typed nodes and edges according to `graph/schema.cypher`. We verified presence of spatial hierarchies (site \textrightarrow{} building \textrightarrow{} storey \textrightarrow{} space) and element-to-space relations.
+
+\paragraph{Spatial Linking.} Using placement-driven linking, we recovered adjacency between spaces and vertical relationships between storeys based on elevations. Placement probes helped diagnose inconsistent local coordinate frames.
+
+\paragraph{Identifier Integrity.} `ingest/check_guid_overlap.py` flagged GUID overlaps across architectural and mechanical models, motivating disambiguation strategies when merging multi-discipline graphs.
+
+\paragraph{RAG Evidence.} We exported graph-derived artifacts and populated `data/processed/evidence.json`, then built an index using `rag/build_index.py`. Preliminary queries indicate the feasibility of grounded Q\&A over building content.
+
+Future iterations will include quantitative metrics (e.g., node/edge counts per label, adjacency accuracy against manual baselines) and runtime performance.
+

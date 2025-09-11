@@ -1,0 +1,13 @@
+Building information models (BIM) in IFC capture rich semantic and geometric representations of facilities. However, querying and reasoning over IFC with conventional file-centric tools remains cumbersome. Graph databases such as Neo4j offer a natural substrate for expressing entities and relationships across spatial, functional, and system perspectives.
+
+This work introduces an end-to-end approach---implemented in this repository---for turning IFC models into a property graph suitable for analysis and retrieval. Our contributions are:
+
+\begin{itemize}[leftmargin=*]
+  \item A reproducible pipeline for converting IFC to a compact JSON representation and ingesting it into Neo4j as typed nodes and relationships.
+  \item Spatial linking methods to infer adjacency, containment, and vertical relations from placements and elevations.
+  \item Practical tools for identifier quality checks, schema definition, and probing spatial placements.
+  \item A retrieval-augmented (RAG) layer to index graph-derived evidence for question answering.
+\end{itemize}
+
+We demonstrate the approach on sample hospital models, discuss limitations and data issues encountered (e.g., GUID overlap and inconsistent placements), and outline directions for scalable graph-based BIM analytics.
+
